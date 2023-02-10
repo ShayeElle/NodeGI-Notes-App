@@ -1,37 +1,37 @@
-const fs = require('fs')
+const fs = require('fs') //to read from the file
 const chalk = require('chalk')
 
 // Using an arrow function to make the code simpler
 const addNote = (title, body) => {
-    const notes = loadNotes()
-    const duplicateNote = notes.find((note) => note.title === title)
+    const notes = loadNotes() //load in the notes
+    const duplicateNote = notes.find((note) => note.title === title) //prevents duplicate notes from being added after the method finds the title
 
-    if (!duplicateNote) {
+    if (!duplicateNote) { //change the notes if the title isnt a dublipcate
         notes.push({
             title: title,
             body: body
         })
-        saveNotes(notes)
+        saveNotes(notes) //save the notes
         console.log(chalk.green.inverse('New note added!'))
-    } else {
+    } else { 
         console.log(chalk.red.inverse('Note title taken!'))
     }
 }
 
 const removeNote = (title) => {
     const notes = loadNotes()
-    const notesToKeep = notes.filter((note) => note.title !== title)
+    const notesToKeep = notes.filter((note) => note.title !== title) //checking to see if the titles match
 
     if (notes.length > notesToKeep.length) {
         console.log(chalk.green.inverse('Note removed!'))
-        saveNotes(notesToKeep)
+        saveNotes(notesToKeep) //to save notes if the length is different
     } else {
         console.log(chalk.red.inverse('No note found!'))
     }    
 }
 
 const listNotes = () => {
-    const notes = loadNotes()
+    const notes = loadNotes() //Call to load notes to get a return back of the array of notes
 
     console.log(chalk.inverse('Your notes'))
 
@@ -42,29 +42,29 @@ const listNotes = () => {
 
 const readNote = (title) => {
     const notes = loadNotes()
-    const note = notes.find((note) => note.title === title)
+    const note = notes.find((note) => note.title === title) //use find instead of filter bc filter will continue to run
 
     if (note) {
-        console.log(chalk.inverse(note.title))
+        console.log(chalk.yellow.inverse(note.title))
         console.log(note.body)
     } else {
         console.log(chalk.red.inverse('Note not found!'))
     }
 }
 
-const saveNotes = (notes) => {
+const saveNotes = (notes) => { 
     const dataJSON = JSON.stringify(notes)
     fs.writeFileSync('notes.json', dataJSON)
 }
 
 
-// If the system throws an error
+
 const loadNotes = () => {
-    try {
+    try { //if no error, it correctly parse the exsiting data
         const dataBuffer = fs.readFileSync('notes.json')
         const dataJSON = dataBuffer.toString()
         return JSON.parse(dataJSON)
-    } catch (e) {
+    } catch (e) { // If the system throws an error, Returns an empty array if there is no data
         return []
     }
 }
