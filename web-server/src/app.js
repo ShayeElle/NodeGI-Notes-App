@@ -2,10 +2,16 @@ const express = require('express') //Calling it to create a new express applicat
 const path = require('path'); //determines the path that we can use
 const app = express()  //Create variable to work with express
 
-const publicDirectoryPath = path.join(__dirname, '../public') //dirname = directory name. The only dir to be exposed by the server currently.
+// Define paths for Express config & dirname = directory name. The only dir to be exposed by the server currently.
+const publicDirectoryPath = path.join(__dirname, '../public')
+const viewsPath = path.join(__dirname, '../templates')
 
-app.set('view engine', 'hbs') //Used to get handlebars set up
-app.use(express.static(publicDirectoryPath)) //finds a match
+// Setup handlebars engine and views location
+app.set('view engine', 'hbs')
+app.set('views', viewsPath)
+
+// Setup static directory to serve
+app.use(express.static(publicDirectoryPath))
 
 app.get('', (req, res) => { //express goes off, gets the view and render into html and make sure html gets back to the requester 
     res.render('index', {
@@ -32,8 +38,8 @@ app.get('/help', (req, res) => {
 
 app.get('/weather', (req, res) => {
     res.send({
-        forecast: 'It is snowing',
-        location: 'Philadelphia'
+        forecast: 'It is sunny',
+        location: 'Charlotte'
     })
 })
 
