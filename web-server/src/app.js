@@ -1,6 +1,8 @@
 const express = require('express') //Calling it to create a new express application
 const path = require('path'); //determines the path that we can use
 const hbs = require('hbs')
+const geocode = require('./utils/geocode')
+const forecast = require('./utils/forecast')
 
 const app = express()  //Create variable to work with express
 
@@ -41,9 +43,44 @@ app.get('/help', (req, res) => {
 
 
 app.get('/weather', (req, res) => {
+    if (!req.query.address) {
+        return res.send({ //if no addy is provided
+            error: 'You must provide an address!'
+        })
+    }
+
+
+    geocode(req.query.address, (error, { latitude, longitude, location } = {}) => {
+        if (error) {
+            return res.send({ error })
+        }
+
+        forecast(latitude, longitude, (error, forecastData) => {
+            if (error) {
+                return res.send({ error })
+            }
+
+            res.send({
+                forecast: forecastData,
+                location,
+                address: req.query.address
+            })
+        })
+    })
+}) //We now have the finalized endpoint that takes in an address and sends the forecast data back.
+
+
+
+app.get('/products', (req, res) => {
+    if (!req.query.search) {
+        return res.send({
+            error: 'You must provide a search term'
+        })
+    }
+
+    console.log(req.query.search)
     res.send({
-        forecast: 'It is sunny',
-        location: 'Charlotte'
+        products: []
     })
 })
 
