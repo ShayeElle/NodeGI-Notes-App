@@ -15,9 +15,9 @@ body {
 }
 
 footer {
-    color: orange;
+    color: #ec8600;
     border-top: 1px solid #eeeeee;
-    margin-top: 16px;
+    margin-top: 50px;
     padding: 16px 0;
 }
 
@@ -30,6 +30,9 @@ header {
 h1 {
     font-size: 64px;
     margin-bottom: 16px;
+}
+.aboutMe {
+    font-style: italic;
 }
 
 header a {
@@ -51,6 +54,10 @@ header a:hover {
     width: 400px;
 } 
 
+.cloud{
+    width: 200px;
+} 
+
 input{
     border: 1px solid #cccccc;
     padding: 8px;
@@ -68,3 +75,13 @@ button:hover{
     background-color: #ec8600;
     border: none;
 }
+
+#message-1, #message-2 {
+    color: #ec8600;
+    font-weight: bold;
+}
+
+ #message-2{
+    color: #ec8600;
+    font-weight:300;
+} 
