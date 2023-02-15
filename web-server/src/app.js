@@ -1,3 +1,6 @@
+// In Asynchronous programming model, one thing happens after the next
+//In a non-blocking model, we can run multiple lines of code
+
 const express = require('express') //Calling it to create a new express application
 const path = require('path'); //determines the path that we can use
 const hbs = require('hbs')
